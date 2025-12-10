@@ -13,7 +13,7 @@ export default function Iuran() {
   // Misal ambil data user dari API / session
   useEffect(() => {
     // Contoh: dapatkan user login dari endpoint
-    fetch("http://127.0.0.1:8000/api/me", {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/me`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
@@ -40,7 +40,7 @@ export default function Iuran() {
       status: "pending",
     };
 
-    fetch("http://127.0.0.1:8000/api/iurandonasi", {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/iurandonasi`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
