@@ -1,10 +1,9 @@
 "use client";
 import { useState } from "react";
 import Header2 from "@/components/Header2";
-import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 
-export default function Iuran() {
+export default function Payment() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const iuranId = searchParams.get("iuran_id"); // Ambil dari query string
