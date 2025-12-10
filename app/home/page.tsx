@@ -8,7 +8,6 @@ import Link from "next/link";
 export default function home() {
   const [user, setUser] = useState<any>(null);
   const [showModal, setShowModal] = useState(false);
-  console.log(user?.role);
 
   // Ambil token dari cookie
   const getCookie = (name: string) => {
@@ -44,44 +43,59 @@ export default function home() {
     <div className="w-full min-h-screen bg-gray-100 pb-10">
       {/* Menu */}
       <Header></Header>
-      <div className="grid grid-cols-4 gap-4 text-center">
-        {[
-          {
-            label: "KTA DIGITAL",
-            icon: "/icons/kta.png",
-            href: "/kta",
-            role: "anggota",
-          },
-          { label: "ARTIKEL", icon: "/icons/artikel.png", href: "/artikel" },
-          { label: "KARYA & BISNIS", icon: "/icons/karya.png", href: "/karya" },
-          {
-            label: "MARKETPLACE",
-            icon: "/icons/market.png",
-            href: "/marketplace",
-          },
-          { label: "INFO DUKA", icon: "/icons/info.png", href: "/info" },
-          {
-            label: "STRUKTUR ORGANISASI",
-            icon: "/icons/struktur.png",
-            href: "/struktur",
-          },
-          { label: "DONASI", icon: "/icons/donasi.png", href: "/donasi" },
-          { label: "POINT", icon: "/icons/point.png", href: "/point" },
-        ]
-          .filter((m) => {
-            // hanya tampilkan KTA DIGITAL jika role = anggota
-            if (m.label === "KTA DIGITAL" && user?.role !== "anggota")
-              return false;
-            return true;
-          })
-          .map((m, i) => (
-            <Link key={i} href={m.href}>
-              <div className="bg-white rounded-2xl p-3 shadow flex flex-col items-center gap-2 cursor-pointer hover:scale-105 transition">
-                <img src={m.icon} alt={m.label} className="w-8 h-8" />
-                <p className="text-xs font-medium text-gray-700">{m.label}</p>
-              </div>
-            </Link>
-          ))}
+      {/* Menu Section */}
+      <div className="mt-4 px-6">
+        <h2 className="text-black text-lg font-semibold mb-3">Menu</h2>
+
+        <div className="grid grid-cols-4 gap-4 text-center">
+          {[
+            {
+              label: "KTA DIGITAL",
+              icon: "/icons/kta.png",
+              href: "/kta",
+              role: "anggota",
+            },
+            { label: "ARTIKEL", icon: "/icons/artikel.png", href: "/artikel" },
+            {
+              label: "KARYA & BISNIS",
+              icon: "/icons/karya.png",
+              href: "/karya",
+            },
+            {
+              label: "MARKETPLACE",
+              icon: "/icons/market.png",
+              href: "/marketplace",
+            },
+            { label: "INFO DUKA", icon: "/icons/info.png", href: "/info" },
+            {
+              label: "STRUKTUR ORGANISASI",
+              icon: "/icons/struktur.png",
+              href: "/struktur",
+            },
+            { label: "DONASI", icon: "/icons/donasi.png", href: "/donasi" },
+            { label: "POINT", icon: "/icons/point.png", href: "/point" },
+          ]
+            .filter((m) => {
+              // hanya tampilkan KTA DIGITAL jika role = anggota
+              if (m.label === "KTA DIGITAL" && user?.role !== "anggota")
+                return false;
+              return true;
+            })
+            .map((m, i) => (
+              <Link key={i} href={m.href}>
+                <div className="bg-white rounded-2xl p-3 shadow flex flex-col items-center gap-2 cursor-pointer hover:scale-105 transition">
+                  <img
+                    src={m.icon}
+                    alt={m.label}
+                    className="w-8 h-8 object-contain"
+                  />
+                  <p className="text-[11px] font-medium text-gray-700 leading-tight">
+                    {m.label}
+                  </p>
+                </div>
+              </Link>
+            ))}
+        </div>
       </div>
 
       {/* Banner */}
@@ -117,14 +131,15 @@ export default function home() {
       {showModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-white rounded-xl p-6 w-80 text-center">
+            <img src="calendar.png" alt="" className="mx-auto block mb-4" />
             <p className="mb-6 text-black">Sudah saatnya iuran 1 tahun</p>
             <Link href="/iuran">
-              <Button className="bg-green-500 text-white w-full">
+              <Button className=" text-white w-full mb-2" color="green">
                 Iuran Sekarang
               </Button>
             </Link>
             <Link href="/myiuran">
-              <Button className="bg-gray-500 text-white w-full">
+              <Button className=" text-white w-full" color="gray">
                 Cek Status Iuran
               </Button>
             </Link>

@@ -14,6 +14,11 @@ export default function IuranDetail() {
   const [item, setItem] = useState<any>(null);
   const [status, setStatus] = useState<StatusType>("pending");
   const [loading, setLoading] = useState(true);
+  const getCookie = (name: string) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop()?.split(";").shift();
+  };
 
   const statusMap: Record<StatusType, string> = {
     berhasil: "paid",
@@ -25,7 +30,7 @@ export default function IuranDetail() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const token = localStorage.getItem("token");
+        const token = getCookie("token");
 
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/api/iurandonasi/${numericId}`,
@@ -64,7 +69,7 @@ export default function IuranDetail() {
 
   const handleSave = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token = getCookie("token");
 
       const statusMap: Record<StatusType, string> = {
         berhasil: "paid",

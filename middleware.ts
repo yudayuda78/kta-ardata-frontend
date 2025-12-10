@@ -10,7 +10,8 @@ export function middleware(request: NextRequest) {
   }
 
   // Jika user belum login, halaman yang harus dilindungi bisa dicek di sini:
-  const protectedRoutes = ["/home", "/dashboard"];
+  const protectedRoutes = ["/home", "/dashboard", "/kta"];
+
   if (protectedRoutes.includes(request.nextUrl.pathname) && !token) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
@@ -19,5 +20,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/login", "/home", "/dashboard"],
+  matcher: ["/login", "/home", "/dashboard", "/kta"],
 };

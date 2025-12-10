@@ -9,19 +9,28 @@ export default function Iuran() {
   const [customAmount, setCustomAmount] = useState("");
   const [inputNama, setInputNama] = useState(""); // untuk input nama
   const [userId, setUserId] = useState<number | null>(null);
+  const getCookie = (name: string) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop()?.split(";").shift();
+  };
 
-  // Misal ambil data user dari API / session
   useEffect(() => {
-    // Contoh: dapatkan user login dari endpoint
+    const token = getCookie("token");
+    if (!token) {
+      console.warn("Token kosong");
+      return;
+    }
+
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/me`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        Authorization: `Bearer ${token}`,
       },
     })
       .then((res) => res.json())
       .then((data) => {
         setUserId(data.id);
-        setInputNama(data.name); // default nama dari user login
+        setInputNama(data.name);
       })
       .catch(console.error);
   }, []);
@@ -40,11 +49,16 @@ export default function Iuran() {
       status: "pending",
     };
 
+    const token = getCookie("token");
+    if (!token) {
+      console.warn("Token kosong");
+      return;
+    }
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/iurandonasi`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(payload),
     })
@@ -59,11 +73,11 @@ export default function Iuran() {
 
   return (
     <div className="w-full min-h-screen bg-gray-100 pb-20">
-      <Header2 />
+      <Header2 title="Iuran Tahunan Periode 2025" />
 
       <div className="bg-white p-4 rounded-b-2xl shadow-md mx-auto w-full max-w-md flex flex-col items-start gap-1">
         <h2 className="text-black font-semibold text-lg">Pembayaran Iuran</h2>
-        <h2 className="text-black text-sm">Nama | Nomor</h2>
+        <h2 className="text-black text-sm">{inputNama} | Nomor</h2>
         <div className="border-b border-gray-300 w-full mt-2"></div>
 
         <h2 className="text-black text-sm mt-2">Jumlah Kirim</h2>

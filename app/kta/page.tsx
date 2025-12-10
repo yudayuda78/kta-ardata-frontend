@@ -34,7 +34,7 @@ export default function kta() {
   return (
     <div className="w-full min-h-screen bg-gray-100 pb-20">
       {/* Header */}
-      <Header2></Header2>
+      <Header2 title="Kartu Tanda Anggota" />
 
       {/* Card Container */}
       <div className="px-6 mt-6 flex justify-center">
@@ -53,13 +53,13 @@ export default function kta() {
           onClick={handleDownload}
           className="bg-green-600 w-14 h-14 rounded-xl flex items-center justify-center text-white text-xl shadow"
         >
-          📥
+          <img src="icons/downloads.png" alt="" />
         </button>
         <button
           onClick={handleFlip}
           className="bg-green-600 w-14 h-14 rounded-xl flex items-center justify-center text-white text-xl shadow"
         >
-          🔄
+          <img src="icons/flip.png" alt="" />
         </button>
       </div>
 

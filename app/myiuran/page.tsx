@@ -45,7 +45,7 @@ export default function Iuran() {
   return (
     <div className="w-full min-h-screen bg-gray-100 pb-20">
       {/* Header */}
-      <Header2 />
+      <Header2 title="Iuran Saya" />
 
       {/* Total Iuran Terbayar */}
       <div className="bg-white p-4 rounded-b-2xl mb-3 shadow-md w-full flex justify-between items-center">

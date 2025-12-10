@@ -51,7 +51,7 @@ export default function PaymentClient({ iuranId }: PaymentClientProps) {
 
   return (
     <div className="w-full min-h-screen bg-gray-100 pb-20">
-      <Header2 />
+      <Header2 title="Metode Pembayaran Tunai" />
       {!showForm ? (
         <div>
           {/* Informasi Rekening */}

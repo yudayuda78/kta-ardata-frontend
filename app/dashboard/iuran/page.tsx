@@ -12,10 +12,15 @@ export default function Iuran() {
   const [deleteId, setDeleteId] = useState<number | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const getCookie = (name: string) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop()?.split(";").shift();
+  };
 
   // Fetch Data
   const loadData = async () => {
-    const token = localStorage.getItem("token");
+    const token = getCookie("token");
     if (!token) return;
 
     try {
@@ -49,7 +54,7 @@ export default function Iuran() {
     setDeleting(true);
 
     try {
-      const token = localStorage.getItem("token");
+      const token = getCookie("token");
 
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/api/iurandonasi/${deleteId}`,

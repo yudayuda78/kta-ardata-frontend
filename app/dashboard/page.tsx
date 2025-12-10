@@ -10,8 +10,46 @@ import {
   Box,
   Wallet,
 } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Dashboard() {
+  const router = useRouter();
+  const [userRole, setUserRole] = useState<string | null>(null);
+
+  const getCookie = (name: string) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop()?.split(";").shift();
+  };
+
+  useEffect(() => {
+    const token = getCookie("token");
+
+    if (!token) {
+      console.log("kosong");
+    }
+
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/me`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+      },
+    })
+      .then(async (res) => {
+        if (!res.ok) throw new Error("Unauthorized");
+        const user = await res.json();
+
+        setUserRole(user.role);
+
+        // Jika bukan admin → di-redirect
+        if (user.role !== "admin") {
+          router.push("/home");
+        }
+      })
+      .catch(() => {});
+  }, []);
   return (
     <div className="space-y-8">
       {/* Header */}

@@ -99,7 +99,7 @@ export default function Header() {
             onClick={() => setDropdownOpen(!dropdownOpen)}
           >
             <img
-              src="/avatar.png"
+              src="/navigation/user.svg"
               alt="User"
               className="w-8 h-8 rounded-full"
             />
