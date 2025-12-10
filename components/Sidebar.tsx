@@ -6,7 +6,11 @@ import { Home, Users, Newspaper, Briefcase, Store, Wallet } from "lucide-react";
 const menuItems = [
   { name: "Dashboard", href: "/dashboard", icon: <Home size={20} /> },
   { name: "Anggota", href: "/anggota", icon: <Users size={20} /> },
-  { name: "Artikel", href: "/artikel", icon: <Newspaper size={20} /> },
+  {
+    name: "Artikel",
+    href: "/dashboard/artikel",
+    icon: <Newspaper size={20} />,
+  },
   {
     name: "Karya dan Bisnis",
     href: "/karya-bisnis",

@@ -55,7 +55,7 @@ export default function home() {
               href: "/kta",
               role: "anggota",
             },
-            { label: "ARTIKEL", icon: "/icons/artikel.png", href: "/artikel" },
+            { label: "ARTIKEL", icon: "/icons/artikel.png", href: "/news" },
             {
               label: "KARYA & BISNIS",
               icon: "/icons/karya.png",
@@ -66,7 +66,7 @@ export default function home() {
               icon: "/icons/market.png",
               href: "/marketplace",
             },
-            { label: "INFO DUKA", icon: "/icons/info.png", href: "/info" },
+            { label: "INFO DUKA", icon: "/icons/info.png", href: "/infoduka" },
             {
               label: "STRUKTUR ORGANISASI",
               icon: "/icons/struktur.png",
