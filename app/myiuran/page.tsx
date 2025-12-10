@@ -23,7 +23,7 @@ export default function Iuran() {
     const token = localStorage.getItem("token"); // ambil token dari login
     if (!token) return;
 
-    fetch("http://127.0.0.1:8000/api/iurandonasi/me", {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/iurandonasi/me`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

@@ -29,7 +29,7 @@ export default function PaymentClient({ iuranId }: PaymentClientProps) {
     formData.append("image", file);
     formData.append("keterangan", description);
 
-    fetch("http://127.0.0.1:8000/api/bukti-transfer", {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/bukti-transfer`, {
       method: "POST",
       body: formData,
       headers: {
