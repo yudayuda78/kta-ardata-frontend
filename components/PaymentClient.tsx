@@ -1,13 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Header2 from "@/components/Header2";
 
-export default function PaymentClient() {
+interface PaymentClientProps {
+  iuranId?: string;
+}
+
+export default function PaymentClient({ iuranId }: PaymentClientProps) {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const iuranId = searchParams.get("iuran_id");
 
   const [file, setFile] = useState<File | null>(null);
   const [description, setDescription] = useState("");
