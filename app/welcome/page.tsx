@@ -2,10 +2,13 @@
 
 import { useState } from "react";
 import Button from "@/components/Button";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Welcome() {
   const [slide, setSlide] = useState(0);
   const [fade, setFade] = useState(true);
+  const router = useRouter();
 
   const slides = [
     {
@@ -32,7 +35,7 @@ export default function Welcome() {
   };
 
   const handleSkip = () => {
-    console.log("Lewati onboarding");
+    router.push("/login");
   };
 
   return (
@@ -84,7 +87,7 @@ export default function Welcome() {
             Lanjut
           </Button>
         ) : (
-          <Button color="green" onClick={() => console.log("Mulai!")}>
+          <Button color="green" onClick={() => router.push("/login")}>
             Mulai
           </Button>
         )}

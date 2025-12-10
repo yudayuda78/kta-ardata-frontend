@@ -87,7 +87,7 @@ export default function PaymentClient({ iuranId }: PaymentClientProps) {
       ) : (
         <div>
           {/* Form Upload */}
-          <div className="bg-white p-4 mt-1 rounded-b-2xl shadow-md mx-auto w-full max-w-md flex flex-col gap-3">
+          <div className="bg-white p-4 mt-1 rounded-b-2xl shadow-md mx-auto w-full max-w-md flex flex-col gap-3 text-black">
             <form onSubmit={handleSubmit} className="flex flex-col gap-3">
               <label className="text-sm font-medium">Keterangan</label>
               <input

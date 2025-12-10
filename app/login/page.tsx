@@ -41,7 +41,7 @@ export default function login() {
     setLoading(true);
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/login", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -63,9 +63,12 @@ export default function login() {
 
       // SIMPAN TOKEN DI LOCAL STORAGE
       document.cookie = `token=${data.token}; path=/;`;
-
-      // Redirect ke dashboard atau halaman lain
-      router.push("/home");
+      console.log(data);
+      if (data.user.role === "admin") {
+        router.push("/dashboard");
+      } else {
+        router.push("/home");
+      }
     } catch (err: any) {
       setError("Gagal terhubung ke server");
     } finally {

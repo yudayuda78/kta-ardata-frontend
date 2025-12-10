@@ -19,13 +19,16 @@ export default function Iuran() {
     if (!token) return;
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/iurandonasi", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: "application/json",
-        },
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/iurandonasi`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/json",
+          },
+        }
+      );
 
       if (!res.ok) throw new Error("Gagal mengambil data");
 
@@ -49,7 +52,7 @@ export default function Iuran() {
       const token = localStorage.getItem("token");
 
       const res = await fetch(
-        `http://127.0.0.1:8000/api/iurandonasi/${deleteId}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/iurandonasi/${deleteId}`,
         {
           method: "DELETE",
           headers: {

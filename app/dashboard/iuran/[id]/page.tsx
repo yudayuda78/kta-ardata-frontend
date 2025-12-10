@@ -28,7 +28,7 @@ export default function IuranDetail() {
         const token = localStorage.getItem("token");
 
         const res = await fetch(
-          `http://127.0.0.1:8000/api/iurandonasi/${numericId}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/api/iurandonasi/${numericId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -73,7 +73,7 @@ export default function IuranDetail() {
       };
 
       const res = await fetch(
-        `http://127.0.0.1:8000/api/iurandonasi/${numericId}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/iurandonasi/${numericId}`,
         {
           method: "PUT",
           headers: {

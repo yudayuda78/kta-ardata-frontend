@@ -8,6 +8,7 @@ import Link from "next/link";
 export default function home() {
   const [user, setUser] = useState<any>(null);
   const [showModal, setShowModal] = useState(false);
+  console.log(user?.role);
 
   // Ambil token dari cookie
   const getCookie = (name: string) => {
@@ -20,7 +21,7 @@ export default function home() {
     const token = getCookie("token");
     if (!token) return;
 
-    fetch("http://127.0.0.1:8000/api/me", {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/me`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -43,29 +44,44 @@ export default function home() {
     <div className="w-full min-h-screen bg-gray-100 pb-10">
       {/* Menu */}
       <Header></Header>
-      <div className="px-6 mt-6">
-        <h3 className="text-lg font-bold text-gray-800 mb-4">Menu</h3>
-
-        <div className="grid grid-cols-4 gap-4 text-center">
-          {[
-            { label: "KTA DIGITAL", icon: "/icons/kta.png" },
-            { label: "ARTIKEL", icon: "/icons/artikel.png" },
-            { label: "KARYA & BISNIS", icon: "/icons/karya.png" },
-            { label: "MARKETPLACE", icon: "/icons/market.png" },
-            { label: "INFO DUKA", icon: "/icons/info.png" },
-            { label: "STRUKTUR ORGANISASI", icon: "/icons/struktur.png" },
-            { label: "DONASI", icon: "/icons/donasi.png" },
-            { label: "POINT", icon: "/icons/point.png" },
-          ].map((m, i) => (
-            <div
-              key={i}
-              className="bg-white rounded-2xl p-3 shadow flex flex-col items-center gap-2"
-            >
-              <img src={m.icon} alt={m.label} className="w-8 h-8" />
-              <p className="text-xs font-medium text-gray-700">{m.label}</p>
-            </div>
+      <div className="grid grid-cols-4 gap-4 text-center">
+        {[
+          {
+            label: "KTA DIGITAL",
+            icon: "/icons/kta.png",
+            href: "/kta",
+            role: "anggota",
+          },
+          { label: "ARTIKEL", icon: "/icons/artikel.png", href: "/artikel" },
+          { label: "KARYA & BISNIS", icon: "/icons/karya.png", href: "/karya" },
+          {
+            label: "MARKETPLACE",
+            icon: "/icons/market.png",
+            href: "/marketplace",
+          },
+          { label: "INFO DUKA", icon: "/icons/info.png", href: "/info" },
+          {
+            label: "STRUKTUR ORGANISASI",
+            icon: "/icons/struktur.png",
+            href: "/struktur",
+          },
+          { label: "DONASI", icon: "/icons/donasi.png", href: "/donasi" },
+          { label: "POINT", icon: "/icons/point.png", href: "/point" },
+        ]
+          .filter((m) => {
+            // hanya tampilkan KTA DIGITAL jika role = anggota
+            if (m.label === "KTA DIGITAL" && user?.role !== "anggota")
+              return false;
+            return true;
+          })
+          .map((m, i) => (
+            <Link key={i} href={m.href}>
+              <div className="bg-white rounded-2xl p-3 shadow flex flex-col items-center gap-2 cursor-pointer hover:scale-105 transition">
+                <img src={m.icon} alt={m.label} className="w-8 h-8" />
+                <p className="text-xs font-medium text-gray-700">{m.label}</p>
+              </div>
+            </Link>
           ))}
-        </div>
       </div>
 
       {/* Banner */}
