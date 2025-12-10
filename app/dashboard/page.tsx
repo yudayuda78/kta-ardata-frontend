@@ -161,7 +161,7 @@ function StatCard({
 
   return (
     <div
-      className={`p-6 rounded-xl text-white bg-gradient-to-br ${bgColors[color]} shadow-lg`}
+      className={`p-6 rounded-xl text-white bg-linear-to-br ${bgColors[color]} shadow-lg`}
     >
       <div className="flex justify-between items-center">
         <p className="font-medium">{title}</p>

@@ -51,11 +51,11 @@ export default function news() {
   return (
     <div className="w-full min-h-screen bg-gray-100 pb-20">
       {/* Header */}
-      <Header2></Header2>
+      <Header2 title="Berita" />
 
       <div className="px-4 mt-6">
         <div className="flex items-center gap-3">
-          <div className="flex items-center bg-white shadow p-3 rounded-full flex-grow">
+          <div className="flex items-center bg-white shadow p-3 rounded-full grow">
             <Search className="text-gray-400" size={20} />
             <input
               type="text"
