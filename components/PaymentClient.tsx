@@ -5,11 +5,7 @@ import { useRouter } from "next/navigation";
 import Header2 from "@/components/Header2";
 import { useSearchParams } from "next/navigation";
 
-interface PaymentClientProps {
-  paramId?: string;
-}
-
-export default function PaymentClient({ paramId }: PaymentClientProps) {
+export default function PaymentClient() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const iuranId = searchParams.get("iuran_id");
