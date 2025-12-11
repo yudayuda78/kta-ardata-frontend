@@ -18,6 +18,7 @@ interface IuranData {
 export default function Iuran() {
   const [iuran, setIuran] = useState<IuranData[]>([]);
   const [totalAmount, setTotalAmount] = useState(0);
+  const [userId, setUserId] = useState("");
   const getCookie = (name: string) => {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
@@ -28,7 +29,26 @@ export default function Iuran() {
     const token = getCookie("token");
     if (!token) return;
 
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/iurandonasi/me`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/me`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setUserId(data.id);
+      })
+      .catch(() => {});
+  }, []);
+
+  useEffect(() => {
+    const token = getCookie("token");
+    if (!token) return;
+    if (!userId) return; // tunggu sampai userId tersedia
+
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/iurandonasiuser/${userId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -45,7 +65,7 @@ export default function Iuran() {
         setTotalAmount(data.data.total_amount);
       })
       .catch((err) => console.error(err));
-  }, []);
+  }, [userId]);
 
   return (
     <div className="w-full min-h-screen bg-gray-100 pb-20">
