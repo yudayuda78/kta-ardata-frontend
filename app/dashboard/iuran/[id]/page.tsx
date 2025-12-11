@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 export default function IuranDetail() {
   const { id } = useParams();
   const numericId = Number(id);
+  console.log(numericId);
 
   type StatusType = "berhasil" | "pending" | "batal";
 
@@ -31,6 +32,7 @@ export default function IuranDetail() {
     const fetchData = async () => {
       try {
         const token = getCookie("token");
+        console.log(token);
 
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/api/iurandonasi/${numericId}`,
@@ -48,6 +50,7 @@ export default function IuranDetail() {
         }
 
         const result = await res.json();
+        console.log(res.status, result);
 
         // API format: data.data = array
         const found = result?.data?.data?.find((d: any) => d.id === numericId);
