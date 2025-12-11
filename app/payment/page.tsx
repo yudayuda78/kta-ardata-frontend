@@ -1,5 +1,10 @@
 import PaymentClient from "@/components/PaymentClient";
+import { Suspense } from "react";
 
 export default function PaymentPage() {
-  return <PaymentClient />;
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <PaymentClient />
+    </Suspense>
+  );
 }
