@@ -3,17 +3,26 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Header2 from "@/components/Header2";
+import { useSearchParams } from "next/navigation";
 
 interface PaymentClientProps {
   iuranId?: string;
 }
 
-export default function PaymentClient({ iuranId }: PaymentClientProps) {
+export default function PaymentClient() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const iuranId = searchParams.get("iuran_id");
 
   const [file, setFile] = useState<File | null>(null);
-  const [description, setDescription] = useState("");
+  const [description, setDescription] = useState("Joko Ardiwinansa");
   const [showForm, setShowForm] = useState(false);
+
+  const getCookie = (name: string) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop()?.split(";").shift();
+  };
 
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
@@ -23,7 +32,7 @@ export default function PaymentClient({ iuranId }: PaymentClientProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!file) return alert("Silakan pilih gambar");
-
+    const token = getCookie("token");
     const formData = new FormData();
     formData.append("iuran_id", iuranId || "");
     formData.append("image", file);
@@ -33,7 +42,7 @@ export default function PaymentClient({ iuranId }: PaymentClientProps) {
       method: "POST",
       body: formData,
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        Authorization: `Bearer ${token}`,
         Accept: "application/json",
       },
     })
@@ -89,21 +98,37 @@ export default function PaymentClient({ iuranId }: PaymentClientProps) {
           {/* Form Upload */}
           <div className="bg-white p-4 mt-1 rounded-b-2xl shadow-md mx-auto w-full max-w-md flex flex-col gap-3 text-black">
             <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-              <label className="text-sm font-medium">Keterangan</label>
+              <label className="text-lg font-medium">
+                Upload Bukti Pembayaran
+              </label>
+              <input
+                type="file"
+                accept="image/*"
+                id="fileInput"
+                className="hidden"
+                onChange={(e) =>
+                  setFile(e.target.files ? e.target.files[0] : null)
+                }
+              />
+
+              {/* Button kustom hijau */}
+              <label
+                htmlFor="fileInput"
+                className="w-full max-w-md h-40 bg-green-500 text-white text-center py-2 rounded-lg cursor-pointer hover:bg-green-600 transition"
+              >
+                <div className="bg-green-600 h-full w-[80%] mx-auto flex flex-col items-center justify-center">
+                  <img src="icons/upload.png" alt="" />
+                  {file ? file.name : "Unggah Foto Pembayaran"}
+                  <h1>Pilih Gambar(JPG, PNG)</h1>
+                </div>
+              </label>
+              <label className="text-sm font-medium">Dibayarkan Kepada</label>
               <input
                 type="text"
                 placeholder="Keterangan"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 className="border px-3 py-2"
-              />
-              <label className="text-sm font-medium">Upload Gambar</label>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) =>
-                  setFile(e.target.files ? e.target.files[0] : null)
-                }
               />
               <button
                 type="submit"

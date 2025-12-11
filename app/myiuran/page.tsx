@@ -18,9 +18,14 @@ interface IuranData {
 export default function Iuran() {
   const [iuran, setIuran] = useState<IuranData[]>([]);
   const [totalAmount, setTotalAmount] = useState(0);
+  const getCookie = (name: string) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop()?.split(";").shift();
+  };
 
   useEffect(() => {
-    const token = localStorage.getItem("token"); // ambil token dari login
+    const token = getCookie("token");
     if (!token) return;
 
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/iurandonasi/me`, {

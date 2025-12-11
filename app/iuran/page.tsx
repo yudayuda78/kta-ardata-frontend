@@ -7,8 +7,9 @@ export default function Iuran() {
   const router = useRouter();
   const [useCustom, setUseCustom] = useState(false);
   const [customAmount, setCustomAmount] = useState("");
-  const [inputNama, setInputNama] = useState(""); // untuk input nama
+  const [inputNama, setInputNama] = useState("Iuran Tahun 2025");
   const [userId, setUserId] = useState<number | null>(null);
+  const [nama, setNama] = useState("");
   const getCookie = (name: string) => {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
@@ -30,7 +31,7 @@ export default function Iuran() {
       .then((res) => res.json())
       .then((data) => {
         setUserId(data.id);
-        setInputNama(data.name);
+        setNama(data.name);
       })
       .catch(console.error);
   }, []);
@@ -77,7 +78,7 @@ export default function Iuran() {
 
       <div className="bg-white p-4 rounded-b-2xl shadow-md mx-auto w-full max-w-md flex flex-col items-start gap-1">
         <h2 className="text-black font-semibold text-lg">Pembayaran Iuran</h2>
-        <h2 className="text-black text-sm">{inputNama} | Nomor</h2>
+        <h2 className="text-black text-sm">{nama} | Nomor</h2>
         <div className="border-b border-gray-300 w-full mt-2"></div>
 
         <h2 className="text-black text-sm mt-2">Jumlah Kirim</h2>
@@ -120,6 +121,7 @@ export default function Iuran() {
             type="text"
             value={inputNama}
             onChange={(e) => setInputNama(e.target.value)}
+            placeholder="Iuran Tahun 2025"
             className="w-full border border-gray-300 rounded px-3 py-2 text-black"
           />
         </form>
