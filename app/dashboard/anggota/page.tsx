@@ -25,7 +25,7 @@ export default function AdminPanel() {
 
   // Fetch Data
   const fetchUsers = async () => {
-    const res = await fetch("http://127.0.0.1:8000/api/users");
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users`);
     const data = await res.json();
     setUsers(data);
     setFilteredUsers(data);
@@ -58,7 +58,9 @@ export default function AdminPanel() {
 
   // Open Edit Modal
   const handleEdit = async (id: number): Promise<void> => {
-    const res = await fetch(`http://127.0.0.1:8000/api/users/${id}`);
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/users/${id}`
+    );
     const data = await res.json();
     setSelectedUser(data);
     setShowEditModal(true);
@@ -68,11 +70,14 @@ export default function AdminPanel() {
   const handleSave = async (): Promise<void> => {
     if (!selectedUser) return;
 
-    await fetch(`http://127.0.0.1:8000/api/users/${selectedUser.id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(selectedUser),
-    });
+    await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/users/${selectedUser.id}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(selectedUser),
+      }
+    );
 
     setShowEditModal(false);
     setSelectedUser(null);
@@ -89,9 +94,12 @@ export default function AdminPanel() {
   const handleDelete = async (): Promise<void> => {
     if (!userToDelete) return;
 
-    await fetch(`http://127.0.0.1:8000/api/users/${userToDelete.id}`, {
-      method: "DELETE",
-    });
+    await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/users/${userToDelete.id}`,
+      {
+        method: "DELETE",
+      }
+    );
 
     setShowDeleteModal(false);
     setUserToDelete(null);
@@ -106,13 +114,13 @@ export default function AdminPanel() {
             <input
               type="text"
               placeholder="Search by name or email..."
-              className="border rounded p-2 flex-1"
+              className="border rounded p-2 flex-1 text-black"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
 
             <select
-              className="border rounded p-2"
+              className="border rounded p-2 text-black"
               value={roleFilter}
               onChange={(e) => setRoleFilter(e.target.value)}
             >
@@ -166,8 +174,14 @@ export default function AdminPanel() {
 
         {/* Edit Modal */}
         {showEditModal && selectedUser && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-            <div className="bg-white p-6 rounded-xl w-96 shadow-lg">
+          <div
+            className="fixed inset-0 bg-black/50 bg-opacity-50 flex items-center justify-center"
+            onClick={() => setShowEditModal(false)}
+          >
+            <div
+              className="bg-white p-6 rounded-xl w-96 shadow-lg text-black"
+              onClick={(e) => e.stopPropagation()}
+            >
               <h2 className="text-xl font-semibold mb-4">Edit User</h2>
 
               <input
@@ -225,15 +239,21 @@ export default function AdminPanel() {
 
         {/* Delete Confirmation Modal */}
         {showDeleteModal && userToDelete && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-            <div className="bg-white p-6 rounded-xl w-80 shadow-lg text-center">
+          <div
+            className="fixed inset-0 bg-black/10 flex items-center justify-center"
+            onClick={() => setShowDeleteModal(false)} // klik di overlay → tutup modal
+          >
+            <div
+              className="bg-white p-6 rounded-xl w-80 shadow-lg text-center"
+              onClick={(e) => e.stopPropagation()} // klik di modal → jangan tutup
+            >
               <p className="mb-4 text-gray-800">
                 Apakah Anda yakin ingin menghapus <b>{userToDelete.name}</b>?
               </p>
               <div className="flex justify-center gap-4">
                 <button
                   onClick={() => setShowDeleteModal(false)}
-                  className="px-4 py-2 bg-gray-300 rounded"
+                  className="px-4 py-2 bg-gray-300 rounded text-black"
                 >
                   Cancel
                 </button>
