@@ -129,17 +129,23 @@ export default function home() {
       </div>
 
       {showModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-xl p-6 w-80 text-center">
+        <div
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+          onClick={() => setShowModal(false)} // klik di background → tutup modal
+        >
+          <div
+            className="bg-white rounded-xl p-6 w-80 text-center"
+            onClick={(e) => e.stopPropagation()} // klik di konten modal → jangan tutup
+          >
             <img src="calendar.png" alt="" className="mx-auto block mb-4" />
             <p className="mb-6 text-black">Sudah saatnya iuran 1 tahun</p>
             <Link href="/iuran">
-              <Button className=" text-white w-full mb-2" color="green">
+              <Button className="text-white w-full mb-2" color="green">
                 Iuran Sekarang
               </Button>
             </Link>
             <Link href="/myiuran">
-              <Button className=" text-white w-full" color="gray">
+              <Button className="text-white w-full" color="gray">
                 Cek Status Iuran
               </Button>
             </Link>
