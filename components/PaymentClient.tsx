@@ -6,10 +6,10 @@ import Header2 from "@/components/Header2";
 import { useSearchParams } from "next/navigation";
 
 interface PaymentClientProps {
-  iuranId?: string;
+  paramId?: string;
 }
 
-export default function PaymentClient() {
+export default function PaymentClient({ paramId }: PaymentClientProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const iuranId = searchParams.get("iuran_id");

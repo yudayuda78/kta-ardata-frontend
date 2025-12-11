@@ -5,5 +5,5 @@ export default function PaymentPage({
 }: {
   searchParams: { iuran_id?: string };
 }) {
-  return <PaymentClient iuranId={searchParams.iuran_id} />;
+  return <PaymentClient paramId={searchParams.iuran_id} />;
 }
